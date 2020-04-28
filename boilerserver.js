@@ -18,7 +18,7 @@ var publicDirectiories = ['/public', '/textures']
 // Server object is made up of initObject (object assigned to self on creation) that is the first argument
 // Second is the position of the root folder, and then public directories relative to this root folder
 var server = Server({
-    port: 1488, // if not defined 2000
+    port: 2000, // if not defined 2000
     TPS: 65, // if not defined 60
 }, __dirname, publicDirectiories)
 
