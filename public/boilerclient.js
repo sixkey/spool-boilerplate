@@ -138,8 +138,11 @@ keysToConstructors = {
 // Object spawner
 var objectSpawner = ObjectSpawner(client.handler, keysToConstructors)
 
-// Spawns 20 objects with key (from earlier) in radius 1000 with center 0 0 
-objectSpawner.spawnInRadius('fruit', 1000, 20, 0, 0);
+objectSpawner.gx = 100
+objectSpawner.gy = 100
+objectSpawner.spawnFromImageMap('./maps/map.png', {
+    'ffffff': 'fruit'
+})
 
 var player = Player({
     x: 0,
@@ -169,7 +172,7 @@ var collisionManager = CollisionManager({
                 a.height = Math.sqrt(size)
 
                 // Handler can remove objects via objectType and ID or by Object
-                client.handler.removeObj(b);
+                client.handler.remove(b);
             }
         }]
     },
