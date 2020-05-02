@@ -6,9 +6,8 @@ var client = Client({
     pureLocalClient: true // tell the client that there isn't any server that will do the calculations
 })
 
-// Player object needs to be defined always because it is used by the server
 // Player's ID is indentical to the id of the socket that the connection is based on 
-// Player is not just the thing you see on the screen, it is a object used to communicate with client via client.clientObject
+// Because of the fact that there is no connection players id is random
 var Player = (initPack = {}) => {
     // In spool constructors always construct this self object and serve it on the end via return
     // reason is again history of the project, but we have yet failed to find some problem with this system (overriding is little tidious)
@@ -25,9 +24,9 @@ var Player = (initPack = {}) => {
 
         // You always need to set the objectType
         // objectType is the key used in handler to differentiate the different types of objects
-        // ServerHandler has objects dictionary that contains all the objects
+        // Handler has objects dictionary that contains all the objects
         // they are arranged by objectType and theirId, you can play with console to see what is up
-        // If you don't care about the objectType and want your object just via ID use SpoolServer.objectsById
+        // If you don't care about the objectType and want your object just via ID use Handler.objectsById
         objectType: 'PLAYER',
 
         rotation: Math.PI / 2,
@@ -138,9 +137,14 @@ keysToConstructors = {
 // Object spawner
 var objectSpawner = ObjectSpawner(client.handler, keysToConstructors)
 
+// Object spawner allows you to spawn objects from an image, each pixel represents a point in a gird
+// You can set the gridsize on x and y axes
 objectSpawner.gx = 100
 objectSpawner.gy = 100
+
+// Use href or src just like in html image (it literally is a html image) to pull a image from staticly served folder and use it to spawn objects
 objectSpawner.spawnFromImageMap('./maps/map.png', {
+    // Color to object key from keyToConstructors
     'ffffff': 'fruit'
 })
 
@@ -155,7 +159,6 @@ client.camera.followObject = client.clientObject;
 
 // Collision manager is also defined with the initObject system
 // Collision manager is based on colPairs - pairs of objectTypes that collide
-
 var collisionManager = CollisionManager({
         // a: array of A objects, A object is the object that the collision is acted on (if you have solid collision this object is stopped)
         // b: array of B objects, B object is the object that is checked -> in most cases some sort of wall or stuff like that
@@ -188,8 +191,6 @@ keyListener.initListener()
 keyListener.onKeyDown = (e) => {
     console.log(e);
 }
-
-
 
 mouseListener = MouseListener(client)
 mouseListener.mouseCoordTransformation = client.camera.inverseTransformPoint
