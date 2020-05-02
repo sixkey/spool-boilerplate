@@ -1,10 +1,10 @@
 // You need to let the SpoolClient now what you want to do with objects with a certain objectType
 var constructors = {
     'PLAYER': {
-        const: Entity
+        const: ClientEntity
     },
     'FRUIT': {
-        const: Entity
+        const: ClientEntity
     }
 }
 
@@ -21,7 +21,7 @@ client.camera.lerp = true;
 client.socketInit()
 
 // For the basic movement described in the boilerserver this is enough, you can set your own events if you want 
-keyListener = KeyboardListener(client.socket)
+keyListener = KeyboardListener(client)
 keyListener.initListener()
 keyListener.onKeyDown = (e) => {
     console.log(e);
